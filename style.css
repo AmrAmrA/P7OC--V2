@@ -1,0 +1,35 @@
+/* Reset */
+*, ::before, ::after, body {
+    padding : 0;
+    margin : 0;
+    box-sizing : border-box;
+    }
+    li {
+    list-style-type : none;
+    }
+
+header {
+    background-image: url("assets/background.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 660px;
+}
+
+.logo__header {
+     margin : 50px 0px 0px 70px
+}
+.title__header {
+    margin: 100px auto;
+    width: 50%;
+    font-size: 44px;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: 'Anton', sans-serif;
+    color:#FFD15B
+}
+.searchInput {
+    width: 900px;
+    height: 70px;
+    border-radius: 12px;
+}
