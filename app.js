@@ -3,6 +3,7 @@ const dataArray = [];
 const init = async () => {
   await displayInformations();
   await fillTheDom();
+  await showme();
 };
 init();
 
@@ -27,7 +28,7 @@ async function displayInformations() {
 async function fillTheDom() {
   const main = document.querySelector(".main__cards");
   for (const recipe of dataArray) {
-    console.log(recipe);
+
     const article = document.createElement("article");
     article.classList.add("recipe__card");
     main.appendChild(article);
@@ -55,4 +56,19 @@ async function fillTheDom() {
                     </div>
                 `;
   }
+}
+const newArray= [];
+async function showme() {
+    dataArray.forEach((el) => {
+        newArray.push(el.name, el.description, el.ingredients.map((ingredient) => ingredient.ingredient));
+    });
+    console.log(newArray);
+
+
+    
+    // const allTitles = dataArray.map((el) => el.name);
+    // const allDescriptions = dataArray.map((el) => el.description);
+    // const allIngredients = dataArray.map((el) => el.ingredients.map((ingredient) => ingredient.ingredient));
+    // console.log(allTitles, allDescriptions, allIngredients);
+    // console.log(dataArray);
 }
