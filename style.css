@@ -72,7 +72,9 @@ main {
 }
 .main__header {
     display: flex;
-    padding: 20px 15px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 80px;
 }
 .recipes__components {
     display: flex;
@@ -83,7 +85,116 @@ main {
     border-radius: 12px;
     width: 195px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 17px 16px;
+}
+.recipe__component p {
+    font-family: 'manrope', sans-serif;
+}
+.numberRecipes {
+    font-family: 'Anton';
+    font-size: 21px;
+}
+
+.arrow__down {
+    width: 15px;
+    height: 8px;
+}
+
+.main__cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 20px 63px;
+    gap: 45px;
+}
+
+.mains__card article {
+    position: relative;
+    z-index: -1;
+}
+
+.time__place {
+    position: absolute;
+    width: 95px;
+    height: 30px;
+    border-radius: 15px;
+    padding: 5px 15px 5px 15px;
+    background-color: #FFD15B;
+    z-index: 99;
+    right: 1px;
+    margin: 15px 15px 0px 0px;
+}
+
+.time__place p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.recipe__body { 
+    padding: 35px 35px;
+}
+.texte__recette {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 25px 0px 10px 0px;
+    color: #7A7A7A;
+}
+
+.recipe__card {
+    position: relative;
+    width: 400px;
+    height: 731px;
+    border-radius: 20px;
+    background-color: #ffffff;
+}
+.recipe__card img {
+    width: 400px;
+    height: 250px;
+    border-radius: 20px 20px 0 0;
+    object-fit: cover;
+}
+.recipe__title {
+    font-family: 'Anton', sans-serif;
+    font-size: 18px;
+}
+.recipe__description {
+    height: 75px;
+    overflow: hidden;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    color: #1B1B1B;
+}
+.recipe__preparation { 
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(50px, auto);
+}
+.recipe__preparation li {
+    display: flex;
+    flex-direction: column;
+}
+.ingredient__name {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1B1B1B;
+}
+.ingredient_quantity {
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color:#7A7A7A; 
 }
 
 /* ------ Responsive ------ */
