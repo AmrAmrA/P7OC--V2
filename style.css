@@ -8,6 +8,8 @@
     list-style-type : none;
     }
 
+
+/* Design section header */
 header {
     background-image: url("assets/background.png");
     background-repeat: no-repeat;
@@ -16,20 +18,82 @@ header {
     height: 660px;
 }
 
-.logo__header {
-     margin : 50px 0px 0px 70px
+
+
+/* Logo Design */
+.logo__place {
+    padding-top: 45px;
+    padding-left: 45px;
 }
+.logo__header {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+
+
+
+/* Title Design */
 .title__header {
     margin: 100px auto;
-    width: 50%;
     font-size: 44px;
     text-align: center;
     text-transform: uppercase;
     font-family: 'Anton', sans-serif;
     color:#FFD15B
 }
+/* Search Design */
+.searchBar__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* Search bar design */
 .searchInput {
-    width: 900px;
+    width: 60vw;
     height: 70px;
-    border-radius: 12px;
+    border-radius: 12px; 
+    padding-left: 35px;
+    outline: none;
+    border: none;
+}
+.searchBar__header ::placeholder {
+    font-family: 'manrope', sans-serif;
+    color: #7A7A7A;
+    font-size: 16px;
+}
+.magnifying__glass {
+    margin-left: -60px;
+}
+
+/* ------ Responsive ------ */
+@media screen and (max-width: 768px) {
+    .title__header {
+        font-size: 25px;
+        flex-wrap: wrap;
+        padding: 0 35px;
+    }
+    .logo__header {
+        width: 200px;
+    }
+    .searchBar__header ::placeholder {
+        font-size: 12px;
+    }
+    .searchInput {
+        height: 50px;
+        padding-left: 10px;
+    }
+    .magnifying__glass {
+        width: 35px;
+        margin-left: -45px;
+    }
+}
+@media screen and (max-width: 465px) {
+    .searchInput {
+        width: 80vw;
+    }
+    .magnifying__glass {
+        display: none;
+    }
 }
