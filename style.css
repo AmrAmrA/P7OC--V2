@@ -67,6 +67,25 @@ header {
     margin-left: -60px;
 }
 
+main {
+    background-color: #EDEDED;
+}
+.main__header {
+    display: flex;
+    padding: 20px 15px;
+}
+.recipes__components {
+    display: flex;
+    gap: 50px;
+}
+.recipe__component {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    width: 195px;
+    display: flex;
+    padding: 17px 16px;
+}
+
 /* ------ Responsive ------ */
 @media screen and (max-width: 768px) {
     .title__header {
