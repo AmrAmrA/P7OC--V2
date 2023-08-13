@@ -57,18 +57,20 @@ async function fillTheDom() {
                 `;
   }
 }
+const arrayAnswer = [
+  "Cookies", "Limonade de Coco", "Tarte au thon",
+"Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée", 
+];
+const ultimateArray = [];
 const newArray= [];
+const arrayDescriptions = [];
 async function showme() {
-    dataArray.forEach((el) => {
-        newArray.push(el.name, el.description, el.ingredients.map((ingredient) => ingredient.ingredient));
-    });
-    console.log(newArray);
-
-
-    
-    // const allTitles = dataArray.map((el) => el.name);
-    // const allDescriptions = dataArray.map((el) => el.description);
-    // const allIngredients = dataArray.map((el) => el.ingredients.map((ingredient) => ingredient.ingredient));
-    // console.log(allTitles, allDescriptions, allIngredients);
-    // console.log(dataArray);
+    console.log(dataArrayOriginal);
+    console.log(dataArrayOriginal.filter((el) => arrayAnswer.includes(el.name)));
+    console.log(dataArrayOriginal.filter((el) => arrayAnswer.includes(el.description)));
+    const nameSelected = dataArrayOriginal.filter((el) => arrayAnswer.includes(el.name));
+    const descriptionSelected = dataArrayOriginal.filter((el) => arrayAnswer.includes(el.description));
+    ultimateArray.push(nameSelected, descriptionSelected);
+    console.log(ultimateArray.flat());
 }
+
