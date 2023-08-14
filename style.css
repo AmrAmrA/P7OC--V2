@@ -208,13 +208,15 @@ main {
 
 /* ------ Responsive ------ */
 @media  screen and (max-width: 1040px) {
+  .main__header{
+    display: block;
+  }
   .numberRecipesOutside {
     display: none;
   }
   .numberRecipesInside {
     display: flex; 
     align-content: center;
-    align-self: self-start;
     align-items: center; 
     height: 50px;
   }
@@ -222,6 +224,9 @@ main {
   .firstPart, .secondPart {
     flex-direction: column;
     align-items: center;
+  }
+  .recipes__components, .firstPart, .secondPart {
+    flex-grow: 1;
   }
   
 }
@@ -247,6 +252,26 @@ main {
     margin-left: -45px;
   }
 }
+
+@media screen and (max-width: 570px) {
+        .recipes__components {
+    flex-direction: column;
+        }
+        .main__cards {
+          justify-content: center;
+          padding: 0px;
+        }
+        .recipe__card {
+          width: 320px;
+        }
+        .recipe__card img {
+          width: 100%;
+
+        }
+
+}
+
+
 @media screen and (max-width: 465px) {
   .searchInput {
     width: 80vw;
