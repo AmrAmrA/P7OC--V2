@@ -73,14 +73,6 @@ main {
   align-items: center;
   padding: 20px 80px;
 }
-.recipes__components {
-  display: flex;
-  gap: 50px;
-}
-.firstPart, .secondPart {
-  display: flex;
-  gap: 50px;
-}
 .recipe__component {
   background-color: #ffffff;
   border-radius: 12px;
@@ -90,6 +82,10 @@ main {
   justify-content: space-between;
   padding: 17px 16px;
 }
+.body__component {
+  height: 300px;
+}
+
 .recipe__component p {
   font-family: "manrope", sans-serif;
 }
