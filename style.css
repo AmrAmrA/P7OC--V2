@@ -63,7 +63,7 @@ header {
 .magnifying__glass {
   margin-left: -60px;
 }
-
+/* The recipes cards section */
 main {
   background-color: #ededed;
 }
@@ -74,6 +74,10 @@ main {
   padding: 20px 80px;
 }
 .recipes__components {
+  display: flex;
+  gap: 50px;
+}
+.firstPart, .secondPart {
   display: flex;
   gap: 50px;
 }
@@ -89,7 +93,12 @@ main {
 .recipe__component p {
   font-family: "manrope", sans-serif;
 }
-.numberRecipes {
+.numberRecipesInside {
+  font-family: "Anton";
+  font-size: 21px;
+  display: none;
+}
+.numberRecipesOutside {
   font-family: "Anton";
   font-size: 21px;
 }
@@ -137,6 +146,10 @@ main {
 .recipe__body {
   padding: 35px 35px;
 }
+.recipe__title {
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+}
 .texte__recette {
   font-family: "Manrope", sans-serif;
   font-weight: 700;
@@ -146,6 +159,22 @@ main {
   margin: 25px 0px 10px 0px;
   color: #7a7a7a;
 }
+
+.recipe__description {
+  height: 75px;
+  overflow: hidden;
+  font-family: "Manrope", sans-serif;
+  font-size: 14px;
+  color: #1b1b1b;
+}
+.recipe__preparation {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(50px, auto);
+}
+
+
 
 .recipe__card {
   position: relative;
@@ -159,23 +188,6 @@ main {
   height: 250px;
   border-radius: 20px 20px 0 0;
   object-fit: cover;
-}
-.recipe__title {
-  font-family: "Anton", sans-serif;
-  font-size: 18px;
-}
-.recipe__description {
-  height: 75px;
-  overflow: hidden;
-  font-family: "Manrope", sans-serif;
-  font-size: 14px;
-  color: #1b1b1b;
-}
-.recipe__preparation {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(50px, auto);
 }
 .recipe__preparation li {
   display: flex;
@@ -195,6 +207,25 @@ main {
 }
 
 /* ------ Responsive ------ */
+@media  screen and (max-width: 1040px) {
+  .numberRecipesOutside {
+    display: none;
+  }
+  .numberRecipesInside {
+    display: flex; 
+    align-content: center;
+    align-self: self-start;
+    align-items: center; 
+    height: 50px;
+  }
+
+  .firstPart, .secondPart {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+}
+
 @media screen and (max-width: 768px) {
   .title__header {
     font-size: 25px;
