@@ -94,17 +94,19 @@ main {
 .secondRow {
   position: absolute;
   width: 195px;
-  height: 300px;
+  height: 330px;
   background-color: #ffffff;
   z-index: 999999999999999;
   padding-top: 25px;
   display: none;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .input__component {
   width: 160px;
   height: 35px;
   display: block;
-  margin: 0px auto;
+  margin: 0px auto 12px auto;
   border: 1.5px solid #C6C6C6;
 }
 
@@ -141,6 +143,21 @@ main {
 
 .display {
   display: block;
+}
+
+.list__element {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  padding: 8px 0px 0px 14px;
+  color: #1b1b1b;
+  width: 195px;
+  height: 37px;
+}
+.list__element:hover {
+  background-color: #FFD15B;
+  width: 195px;
+  height: 37px;
 }
 
 .main__cards {

@@ -4,6 +4,7 @@ const init = async () => {
   await displayInformations();
   await fillTheDom();
   // await showme();
+  await spreadElements(); 
 };
 init();
 
@@ -77,7 +78,7 @@ async function fillTheDom() {
 
 
 
-
+// Function to to toggle the display of the ingredients, appliances and ustensils
 const magnyfiyingComponents = document.querySelectorAll(".arrow__down");
 const secondRows = document.querySelectorAll(".secondRow");
 
@@ -93,3 +94,33 @@ magnyfiyingComponents.forEach((el) => {
     });
 });
 });
+
+
+
+const listAppliances      = document.querySelectorAll(".list__appliances");
+const listIngredients     =   document.querySelectorAll(".list__ingredients");
+const listUstensils       = document.querySelectorAll(".list__ustensils");
+async function spreadElements() {
+  // array of appliances
+  const ArraySorted = dataArray.map(el => el.appliance).sort()
+  const unSet = new Set(ArraySorted)
+  const entriesSet = unSet.values()
+  for (const entry of entriesSet)
+  {
+    listAppliances[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
+  }
+
+
+  // array of ustensils
+  const ArraySorted2 = dataArray.map(el => el.ustensils).flat().sort()
+  const ArraySorted3 = ArraySorted2.map((el => el.includes('(6)') ? el.replace('(6)', '') : el)) ;
+  ArraySorted3.sort((a,b) => a.localeCompare(b)); 
+  const unSetDeux = new Set(ArraySorted3.map((el => el.charAt(0).toUpperCase() + el.slice(1))))
+  for(const entry of unSetDeux) {
+    listUstensils[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
+  }
+
+  // array of ustensils
+  const ArraySorted4 = dataArray.map(el => el.ingredients).flat().map(el => el.ingredient).sort()
+  console.log(ArraySorted4);
+}
