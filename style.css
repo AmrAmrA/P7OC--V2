@@ -73,9 +73,15 @@ main {
   align-items: center;
   padding: 20px 80px;
 }
+.recipes__components,
+.firstPart,
+.secondPart {
+  display: flex;
+  gap: 50px;
+}
 .recipe__component {
   background-color: #ffffff;
-  border-radius: 12px;
+  border-radius: 12px 12px 0px 0px;
   width: 195px;
   display: flex;
   align-items: center;
@@ -84,6 +90,21 @@ main {
 }
 .body__component {
   height: 300px;
+}
+.secondRow {
+  position: absolute;
+  width: 195px;
+  height: 300px;
+  background-color: #ffffff;
+  z-index: 999999999999999;
+  padding-top: 25px;
+}
+.input__component {
+  width: 160px;
+  height: 35px;
+  display: block;
+  margin: 0px auto;
+  border: 1.5px solid #C6C6C6;
 }
 
 .recipe__component p {
@@ -170,8 +191,6 @@ main {
   grid-auto-rows: minmax(50px, auto);
 }
 
-
-
 .recipe__card {
   position: relative;
   width: 400px;
@@ -203,28 +222,30 @@ main {
 }
 
 /* ------ Responsive ------ */
-@media  screen and (max-width: 1040px) {
-  .main__header{
+@media screen and (max-width: 1040px) {
+  .main__header {
     display: block;
   }
   .numberRecipesOutside {
     display: none;
   }
   .numberRecipesInside {
-    display: flex; 
+    display: flex;
     align-content: center;
-    align-items: center; 
+    align-items: center;
     height: 50px;
   }
 
-  .firstPart, .secondPart {
+  .firstPart,
+  .secondPart {
     flex-direction: column;
     align-items: center;
   }
-  .recipes__components, .firstPart, .secondPart {
+  .recipes__components,
+  .firstPart,
+  .secondPart {
     flex-grow: 1;
   }
-  
 }
 
 @media screen and (max-width: 768px) {
@@ -250,23 +271,20 @@ main {
 }
 
 @media screen and (max-width: 570px) {
-        .recipes__components {
+  .recipes__components {
     flex-direction: column;
-        }
-        .main__cards {
-          justify-content: center;
-          padding: 0px;
-        }
-        .recipe__card {
-          width: 320px;
-        }
-        .recipe__card img {
-          width: 100%;
-
-        }
-
+  }
+  .main__cards {
+    justify-content: center;
+    padding: 0px;
+  }
+  .recipe__card {
+    width: 320px;
+  }
+  .recipe__card img {
+    width: 100%;
+  }
 }
-
 
 @media screen and (max-width: 465px) {
   .searchInput {
