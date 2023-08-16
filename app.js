@@ -100,6 +100,8 @@ magnyfiyingComponents.forEach((el) => {
 const listAppliances      = document.querySelectorAll(".list__appliances");
 const listIngredients     =   document.querySelectorAll(".list__ingredients");
 const listUstensils       = document.querySelectorAll(".list__ustensils");
+
+
 async function spreadElements() {
   // array of appliances
   const ArraySorted = dataArray.map(el => el.appliance).sort()
@@ -120,7 +122,16 @@ async function spreadElements() {
     listUstensils[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
   }
 
-  // array of ustensils
+  // array of ingredients
   const ArraySorted4 = dataArray.map(el => el.ingredients).flat().map(el => el.ingredient).sort()
-  console.log(ArraySorted4);
+  ArraySorted4.sort((a,b) => a.localeCompare(b));
+  const ArraySorted5 = ArraySorted4.map((el => el.toLowerCase()))
+
+  console.log(ArraySorted5);
+  
+  const unSetTrois = new Set(ArraySorted5.map((el => el.charAt(0).toUpperCase() + el.slice(1))))
+  console.log(unSetTrois);
+  for (const entry of unSetTrois) {
+    listIngredients[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
+  }
 }
