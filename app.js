@@ -58,25 +58,6 @@ async function fillTheDom() {
                 `;
   }
 }
-// const arrayAnswer = [
-//   "Cookies", "Limonade de Coco", "Tarte au thon",
-// "Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée", 
-// ];
-// const ultimateArray = [];
-// const newArray= [];
-// const arrayDescriptions = [];
-// async function showme() {
-//     console.log(dataArrayOriginal);
-//     console.log(dataArrayOriginal.filter((el) => arrayAnswer.includes(el.name)));
-//     console.log(dataArrayOriginal.filter((el) => arrayAnswer.includes(el.description)));
-//     const nameSelected = dataArrayOriginal.filter((el) => arrayAnswer.includes(el.name));
-//     const descriptionSelected = dataArrayOriginal.filter((el) => arrayAnswer.includes(el.description));
-//     ultimateArray.push(nameSelected, descriptionSelected);
-//     console.log(ultimateArray.flat());
-// }
-
-
-
 
 // Function to to toggle the display of the ingredients, appliances and ustensils
 const magnyfiyingComponents = document.querySelectorAll(".arrow__down");
@@ -132,28 +113,39 @@ async function spreadElements() {
   }
 }
 
-let filteredNameArray = [];
-let filteredIngredientsArray = [];
-let filteredDescriptionArray = [];
+
 let globalArray = [];
+let errorMessage = document.querySelector(".error__message");
 const searchInput = document.querySelector(".searchInput");
 searchInput.addEventListener("keyup", (e) => {
-    const value = e.target.value.toLowerCase().trim();
-    if(value.length >= 3) {
-      filteredNameArray = dataArray.filter((el) => el.name.toLowerCase().trim().includes(value));
-      filteredIngredientsArray = dataArray.filter((el) => el.ingredients.map((el) => el.ingredient.toLowerCase().trim()).includes(value));
-      filteredDescriptionArray = dataArray.filter((el) => el.description.toLowerCase().trim().includes(value));
-      globalArray = [...filteredNameArray, ...filteredIngredientsArray, ...filteredDescriptionArray];
-      console.log(globalArray);
-      const globalArrayNewSet = new Set(globalArray);
-      machinChouette(globalArrayNewSet)
+  const main = document.querySelector(".main__cards");
+  console.log(main.childElementCount);
+  const value = e.target.value.toLowerCase().trim();
+    if(value.length >= 3 && main.childElementCount > 0) {
+      globalArray = [
+        ...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)), 
+        ...dataArray.filter((el) => el.ingredients.map((el) => el.ingredient.toLowerCase().trim()).includes(value)),
+        ...dataArray.filter((el) => el.description.toLowerCase().trim().includes(value))];
+      machinChouette(globalArray)
+      errorMessage.style = "display: none";
     }
-  }
-    
-); 
+    else if( value.length >= 3 && main.childElementCount == 0) {
+      errorMessage.style = "display: block";
+      errorMessage.textContent = "Aucune recette ne correspond à votre critère… vous pouvez chercher";
+    }
+    else if (value.length == 0) {
+      errorMessage.style = "display: none";
+      const main = document.querySelector(".main__cards");
+      main.innerHTML = "";
+      fillTheDom();
+    }
 
-function machinChouette(globalArrayNewSet) {
-  console.log(globalArrayNewSet);
+
+    
+  }); 
+
+function machinChouette(globalArray) {
+  const globalArrayNewSet = new Set(globalArray);
   const main = document.querySelector(".main__cards");
   main.innerHTML = "";
   for (const recipe of globalArrayNewSet) {

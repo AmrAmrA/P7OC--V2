@@ -40,6 +40,18 @@ header {
   font-family: "Anton", sans-serif;
   color: #ffd15b;
 }
+
+/* Error Message */
+.error__message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  margin-bottom: 15px;
+  font-family: 'Manrope', sans-serif;
+}
+
+
 /* Search Design */
 .searchBar__header {
   display: flex;
