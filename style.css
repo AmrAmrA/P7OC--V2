@@ -201,6 +201,7 @@ main {
 .recipe__title {
   font-family: "Anton", sans-serif;
   font-size: 18px;
+  font-weight: 400;
 }
 .texte__recette {
   font-family: "Manrope", sans-serif;
