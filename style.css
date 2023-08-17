@@ -43,10 +43,13 @@ header {
 
 /* Error Message */
 .error__message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: red;
+  display: none;
+  margin: 0 auto;
+  text-align: center;
+  color: black;
+  background-color: #FDEDEF;
+  width: 500px;
+  padding: 20px;
   margin-bottom: 15px;
   font-family: 'Manrope', sans-serif;
 }

@@ -117,35 +117,40 @@ async function spreadElements() {
 let globalArray = [];
 let errorMessage = document.querySelector(".error__message");
 const searchInput = document.querySelector(".searchInput");
-searchInput.addEventListener("keyup", (e) => {
-  const main = document.querySelector(".main__cards");
-  console.log(main.childElementCount);
+
+searchInput.addEventListener("input", (e) => {;
   const value = e.target.value.toLowerCase().trim();
-    if(value.length >= 3 && main.childElementCount > 0) {
-      globalArray = [
-        ...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)), 
-        ...dataArray.filter((el) => el.ingredients.map((el) => el.ingredient.toLowerCase().trim()).includes(value)),
-        ...dataArray.filter((el) => el.description.toLowerCase().trim().includes(value))];
-      machinChouette(globalArray)
+  globalArray = [
+    ...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)), 
+    ...dataArray.filter((el) => el.ingredients.map((el) => el.ingredient.toLowerCase().trim()).includes(value)),
+    ...dataArray.filter((el) => el.description.toLowerCase().trim().includes(value))];
+    conditionnalLists(value);    
+  }); 
+
+
+  function conditionnalLists (value) {
+    if(value.length >= 3 && globalArray.length > 0) {
       errorMessage.style = "display: none";
-    }
-    else if( value.length >= 3 && main.childElementCount == 0) {
-      errorMessage.style = "display: block";
-      errorMessage.textContent = "Aucune recette ne correspond à votre critère… vous pouvez chercher";
+      machinChouette(globalArray)
     }
     else if (value.length == 0) {
       errorMessage.style = "display: none";
       const main = document.querySelector(".main__cards");
       main.innerHTML = "";
-      fillTheDom();
+      fillTheDom()
+      const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
+      numberRecipeOutside.textContent = `1500 recettes`;
     }
+    else if (value.length >= 3 && globalArray.length == 0) {
+      errorMessage.style = "display: flex";
+      errorMessage.textContent = "Aucune recette ne correspond à votre critère… vous pouvez chercher";
+      machinChouette(globalArray)
+    }}  
 
-
-    
-  }); 
-
+const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
 function machinChouette(globalArray) {
   const globalArrayNewSet = new Set(globalArray);
+  numberRecipeOutside.textContent = `${globalArrayNewSet.size} recettes`;
   const main = document.querySelector(".main__cards");
   main.innerHTML = "";
   for (const recipe of globalArrayNewSet) {
