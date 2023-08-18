@@ -3,8 +3,7 @@ const dataArray = [];
 const init = async () => {
   await displayInformations();
   await fillTheDom();
-  // await showme();
-  await spreadElements(); 
+  await spreadElements();
 };
 init();
 
@@ -29,7 +28,6 @@ async function displayInformations() {
 async function fillTheDom() {
   const main = document.querySelector(".main__cards");
   for (const recipe of dataArray) {
-
     const article = document.createElement("article");
     article.classList.add("recipe__card");
     main.appendChild(article);
@@ -46,12 +44,19 @@ async function fillTheDom() {
                 <p class = "recipe__description">${recipe.description}</p>
                 <p class = "texte__recette"> Ingrédients </p>
                 <ul class = "recipe__preparation">
-                    ${recipe.ingredients.map((ingredient) =>`
+                    ${recipe.ingredients
+                      .map(
+                        (ingredient) => `
                     <li> 
-                        <span class = "ingredient__name">  ${ingredient.ingredient} </span>   
-                        <span class = "ingredient_quantity"> ${ingredient.quantity ? ingredient.quantity : ""}  ${ingredient.unit ? ingredient.unit : ""} </span> 
-                    </li>`)
-                  .join("")}
+                        <span class = "ingredient__name">  ${
+                          ingredient.ingredient
+                        } </span>   
+                        <span class = "ingredient_quantity"> ${
+                          ingredient.quantity ? ingredient.quantity : ""
+                        }  ${ingredient.unit ? ingredient.unit : ""} </span> 
+                    </li>`
+                      )
+                      .join("")}
                 </ul>
                     </div>
                     </div>
@@ -63,98 +68,115 @@ async function fillTheDom() {
 const magnyfiyingComponents = document.querySelectorAll(".arrow__down");
 const secondRows = document.querySelectorAll(".secondRow");
 
-magnyfiyingComponents.forEach((el) => { 
+magnyfiyingComponents.forEach((el) => {
   el.addEventListener("click", (e) => {
     e.target.classList.toggle("tourner");
     const classArrow = e.target.attributes.class.ownerElement.classList[1];
     secondRows.forEach((el) => {
       const classSecondRow = el.classList[1];
-      if (classArrow  === classSecondRow) {
+      if (classArrow === classSecondRow) {
         el.classList.toggle("display");
       }
     });
+  });
 });
-});
 
-
-
-const listAppliances      = document.querySelectorAll(".list__appliances");
-const listIngredients     =   document.querySelectorAll(".list__ingredients");
-const listUstensils       = document.querySelectorAll(".list__ustensils");
+const listAppliances = document.querySelectorAll(".list__appliances");
+const listIngredients = document.querySelectorAll(".list__ingredients");
+const listUstensils = document.querySelectorAll(".list__ustensils");
 const pluralArray = [];
 async function spreadElements() {
   // array of appliances
-  const ArraySorted = dataArray.map(el => el.appliance).sort()
-  const unSet = new Set(ArraySorted)
-  const entriesSet = unSet.values()
-  for (const entry of entriesSet)
-  {
-    listAppliances[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
+  const ArraySorted = dataArray.map((el) => el.appliance).sort();
+  const unSet = new Set(ArraySorted);
+  const entriesSet = unSet.values();
+  for (const entry of entriesSet) {
+    listAppliances[1].innerHTML += `<li class = "list__element"> ${entry} </li>`;
   }
   // array of ustensils
-  const ArraySorted2 = dataArray.map(el => el.ustensils).flat().sort()
-  const ArraySorted3 = ArraySorted2.map((el => el.includes('(6)') ? el.replace('(6)', '') : el)) ;
-  ArraySorted3.sort((a,b) => a.localeCompare(b)); 
-  const unSetDeux = new Set(ArraySorted3.map((el => el.charAt(0).toUpperCase() + el.slice(1))))
-  for(const entry of unSetDeux) {
-    listUstensils[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
+  const ArraySorted2 = dataArray
+    .map((el) => el.ustensils)
+    .flat()
+    .sort();
+  const ArraySorted3 = ArraySorted2.map((el) =>
+    el.includes("(6)") ? el.replace("(6)", "") : el
+  );
+  ArraySorted3.sort((a, b) => a.localeCompare(b));
+  const unSetDeux = new Set(
+    ArraySorted3.map((el) => el.charAt(0).toUpperCase() + el.slice(1))
+  );
+  for (const entry of unSetDeux) {
+    listUstensils[1].innerHTML += `<li class = "list__element"> ${entry} </li>`;
   }
   // array of ingredients
-  const ArraySorted4 = dataArray.map(el => el.ingredients).flat().map(el => el.ingredient).sort()
-  ArraySorted4.sort((a,b) => a.localeCompare(b));
-  const ArraySorted5 = ArraySorted4.map((el => el.toLowerCase()))
-  // ArraySorted5.map((el => el.charAt(el.length-1) === 's' ? console.log(el): '')));
+  const ArraySorted4 = dataArray
+    .map((el) => el.ingredients)
+    .flat()
+    .map((el) => el.ingredient)
+    .sort();
+  ArraySorted4.sort((a, b) => a.localeCompare(b));
+  const ArraySorted5 = ArraySorted4.map((el) => el.toLowerCase());
 
-  
-  const unSetTrois = new Set(ArraySorted5.map((el => el.charAt(0).toUpperCase() + el.slice(1))))
+  const unSetTrois = new Set(
+    ArraySorted5.map((el) => el.charAt(0).toUpperCase() + el.slice(1))
+  );
 
   for (const entry of unSetTrois) {
-    listIngredients[1].innerHTML += `<li class = "list__element"> ${entry} </li>`
+    listIngredients[1].innerHTML += `<li class = "list__element"> ${entry} </li>`;
   }
 }
 
-
 let globalArray = [];
 let errorMessage = document.querySelector(".error__message");
+let errorBackground = document.querySelector(".error__background");
 const searchInput = document.querySelector(".searchInput");
 
-searchInput.addEventListener("input", (e) => {;
+searchInput.addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase().trim();
   globalArray = [
-    ...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)), 
-    ...dataArray.filter((el) => el.ingredients.map((el) => el.ingredient.toLowerCase().trim()).includes(value)),
-    ...dataArray.filter((el) => el.description.toLowerCase().trim().includes(value))];
-    conditionnalLists(value);    
-  }); 
+    ...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)),
+    ...dataArray.filter((el) =>
+      el.ingredients
+        .map((el) => el.ingredient.toLowerCase().trim())
+        .includes(value)
+    ),
+    ...dataArray.filter((el) =>
+      el.description.toLowerCase().trim().includes(value)
+    ),
+  ];
+  conditionnalLists(value);
+});
 
-
-  function conditionnalLists (value) {
-    if(value.length >= 3 && globalArray.length > 0) {
-      errorMessage.style = "display: none";
-      machinChouette(globalArray)
-    }
-    else if (value.length == 0) {
-      errorMessage.style = "display: none";
-      const main = document.querySelector(".main__cards");
-      main.innerHTML = "";
-      fillTheDom()
-      const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
-      numberRecipeOutside.textContent = `1500 recettes`;
-    }
-    else if (value.length >= 3 && globalArray.length == 0) {
-      errorMessage.style = "display: flex";
-      errorMessage.textContent = "Aucune recette ne correspond à votre critère… vous pouvez chercher";
-      machinChouette(globalArray)
-    }}  
-
+function conditionnalLists(value) {
+  if (value.length >= 3 && globalArray.length > 0) {
+    errorBackground.style = "display: none";
+    machinChouette(globalArray);
+  } else if (value.length == 0) {
+    errorBackground.style = "display: none";
+    const main = document.querySelector(".main__cards");
+    main.innerHTML = "";
+    fillTheDom();
+    const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
+    const numberRecipesInside = document.querySelector(".numberRecipesInside");
+    numberRecipeOutside.textContent = `1500 recettes`;
+    numberRecipesInside.textContent = `1500 recettes`;
+  } else if (value.length >= 3 && globalArray.length == 0) {
+    errorBackground.style = "display: block";
+    errorMessage.textContent =
+    `Aucune recette ne contient "${value}" vous pouvez chercher «
+    tarte aux pommes », « poisson », etc`;
+    machinChouette(globalArray);
+  }
+}
+const numberRecipesInside = document.querySelector(".numberRecipesInside");
 const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
 function machinChouette(globalArray) {
   const globalArrayNewSet = new Set(globalArray);
   numberRecipeOutside.textContent = `${globalArrayNewSet.size} recettes`;
+  numberRecipesInside.textContent = `${globalArrayNewSet.size} recettes`;
   const main = document.querySelector(".main__cards");
   main.innerHTML = "";
   for (const recipe of globalArrayNewSet) {
-
     const article = document.createElement("article");
     article.classList.add("recipe__card");
     main.appendChild(article);
@@ -171,12 +193,19 @@ function machinChouette(globalArray) {
                 <p class = "recipe__description">${recipe.description}</p>
                 <p class = "texte__recette"> Ingrédients </p>
                 <ul class = "recipe__preparation">
-                    ${recipe.ingredients.map((ingredient) =>`
+                    ${recipe.ingredients
+                      .map(
+                        (ingredient) => `
                     <li> 
-                        <span class = "ingredient__name">  ${ingredient.ingredient} </span>   
-                        <span class = "ingredient_quantity"> ${ingredient.quantity ? ingredient.quantity : ""}  ${ingredient.unit ? ingredient.unit : ""} </span> 
-                    </li>`)
-                  .join("")}
+                        <span class = "ingredient__name">  ${
+                          ingredient.ingredient
+                        } </span>   
+                        <span class = "ingredient_quantity"> ${
+                          ingredient.quantity ? ingredient.quantity : ""
+                        }  ${ingredient.unit ? ingredient.unit : ""} </span> 
+                    </li>`
+                      )
+                      .join("")}
                 </ul>
                     </div>
                     </div>

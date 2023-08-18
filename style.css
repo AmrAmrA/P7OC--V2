@@ -33,7 +33,7 @@ header {
 
 /* Title Design */
 .title__header {
-  margin: 100px auto;
+  margin: 50px auto 20px auto;
   font-size: 44px;
   text-align: center;
   text-transform: uppercase;
@@ -41,17 +41,25 @@ header {
   color: #ffd15b;
 }
 
+
+/* Background color of Error Message */
+.error__background {
+  display: block;
+  display: none;
+  background-color: #FDEDEF;
+  border-radius: 12px;
+  width: 60vw;
+  margin: 0 auto;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
 /* Error Message */
 .error__message {
-  display: none;
-  margin: 0 auto;
   text-align: center;
   color: black;
-  background-color: #FDEDEF;
-  width: 500px;
-  padding: 20px;
-  margin-bottom: 15px;
   font-family: 'Manrope', sans-serif;
+  word-break: break-word;
 }
 
 
@@ -338,7 +346,7 @@ main {
 }
 
 @media screen and (max-width: 465px) {
-  .searchInput {
+  .searchInput, .error__background {
     width: 80vw;
   }
   .magnifying__glass {
