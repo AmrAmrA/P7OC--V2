@@ -24,7 +24,8 @@ async function displayInformations() {
   //   dataArray
   return data;
 }
-
+// Fill the DOM with the data from the API
+// there are cards with the recipes, the time, the name, the description, the ingredients...etc
 async function fillTheDom() {
   const main = document.querySelector(".main__cards");
   for (const recipe of dataArray) {
@@ -85,6 +86,9 @@ const listAppliances = document.querySelectorAll(".list__appliances");
 const listIngredients = document.querySelectorAll(".list__ingredients");
 const listUstensils = document.querySelectorAll(".list__ustensils");
 const pluralArray = [];
+
+// Function to fill the lists of ingredients, appliances and ustensils
+// We had to sort them, flat them, and put them in a set to avoid duplicates
 async function spreadElements() {
   // array of appliances
   const ArraySorted = dataArray.map((el) => el.appliance).sort();
@@ -130,47 +134,48 @@ let globalArray = [];
 let errorMessage = document.querySelector(".error__message");
 let errorBackground = document.querySelector(".error__background");
 const searchInput = document.querySelector(".searchInput");
-
+// Event listener on the search bar when the user types something 
+// We filter the data array to find the recipes that match the user's input
 searchInput.addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase().trim();
-  globalArray = [
-    ...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)),
-    ...dataArray.filter((el) =>
-      el.ingredients
-        .map((el) => el.ingredient.toLowerCase().trim())
-        .includes(value)
-    ),
-    ...dataArray.filter((el) =>
-      el.description.toLowerCase().trim().includes(value)
-    ),
-  ];
+  globalArray = [...dataArray.filter((el) => el.name.toLowerCase().trim().includes(value)),
+    ...dataArray.filter((el) =>el.ingredients.map((el) => el.ingredient.toLowerCase().trim()).includes(value)),
+    ...dataArray.filter((el) =>el.description.toLowerCase().trim().includes(value))];
   conditionnalLists(value);
 });
 
+
+// Conditionnal function when the user types something in the search bar
+// We handle an error message if the user types something that doesn't match any recipe
+const main = document.querySelector(".main__cards");
 function conditionnalLists(value) {
   if (value.length >= 3 && globalArray.length > 0) {
     errorBackground.style = "display: none";
     updateDomBarSearch(globalArray);
-    updateThreeLists(globalArray)
+    updateThreeLists(globalArray);
   } else if (value.length == 0) {
     errorBackground.style = "display: none";
-    const main = document.querySelector(".main__cards");
     main.innerHTML = "";
     fillTheDom();
-    const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
-    const numberRecipesInside = document.querySelector(".numberRecipesInside");
-    numberRecipeOutside.textContent = `1500 recettes`;
-    numberRecipesInside.textContent = `1500 recettes`;
-    updateThreeLists(globalArray)
+    numberOfRecipesGlobal();
+    updateThreeLists(globalArray);
   } else if (value.length >= 3 && globalArray.length == 0) {
     errorBackground.style = "display: block";
-    errorMessage.textContent =
-    `Aucune recette ne contient "${value}" vous pouvez chercher «
+    errorMessage.textContent = `Aucune recette ne contient "${value}" vous pouvez chercher «
     tarte aux pommes », « poisson », etc`;
     updateDomBarSearch(globalArray);
-    updateThreeLists(globalArray)
+    updateThreeLists(globalArray);
   }
 }
+// Function to fill the number of recipes on the right of the page
+function numberOfRecipesGlobal() {
+  const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
+  const numberRecipesInside = document.querySelector(".numberRecipesInside");
+  numberRecipeOutside.textContent = `1500 recettes`;
+  numberRecipesInside.textContent = `1500 recettes`;
+}
+
+
 const numberRecipesInside = document.querySelector(".numberRecipesInside");
 const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
 function updateDomBarSearch(globalArray) {
@@ -217,32 +222,50 @@ function updateDomBarSearch(globalArray) {
 }
 
 
+// Update the three lists dynamically
+// when the user types something in the search bar
 function updateThreeLists(globalArray) {
   // Filter Ingredients and update them dynamically
-  const filterIngrdients = [...new Set(globalArray)]
-  const filterIngrdientsTwo = [...filterIngrdients.map((el =>(el.ingredients).flat()
-  .map((el) => el.ingredient)
-  .sort().flat()))];
-  const filterIngrdientsThree = [...new Set(filterIngrdientsTwo.flat().sort((a, b) => a.localeCompare(b)))]
+  const filterIngrdients = [...new Set(globalArray)];
+  const filterIngrdientsTwo = [...filterIngrdients.map((el) =>el.ingredients.flat().map((el) => el.ingredient).sort().flat()),];
+  const filterIngrdientsThree = [...new Set(filterIngrdientsTwo.flat().sort((a, b) => a.localeCompare(b))),];
   listIngredients[1].innerHTML = "";
-  for(const ingredient of filterIngrdientsThree){
-    listIngredients[1].innerHTML += `<li class = "list__element"> ${ingredient} </li>`;
-  }
+  for (const ingredient of filterIngrdientsThree) {listIngredients[1].innerHTML += `<li class = "list__element"> ${ingredient} </li>`;}
   // Filter Appliances and update them dynamically
-  const filterAppliances = [...new Set(globalArray)]
-  const filterAppliancesTwo = [...filterAppliances.map((el =>(el.appliance)))];
-  const filterAppliancesThree = [...new Set(filterAppliancesTwo.flat().sort((a, b) => a.localeCompare(b)))]
-  listAppliances[1].innerHTML = "";
-  for(const appliance of filterAppliancesThree){
-    listAppliances[1].innerHTML += `<li class = "list__element"> ${appliance} </li>`;
-  }
+  const filterAppliances = [...new Set(globalArray)];
+  const filterAppliancesTwo = [...filterAppliances.map((el) => el.appliance)];
+  const filterAppliancesThree = [...new Set(filterAppliancesTwo.flat().sort((a, b) => a.localeCompare(b))),];
+  listAppliances[1].innerHTML = ""; 
+  for (const appliance of filterAppliancesThree) {listAppliances[1].innerHTML += `<li class = "list__element"> ${appliance} </li>`;}
   // Filter Ustensils and update them dynamically
-  const filterUstensils = [...new Set(globalArray)]
-  const filterUstensilsTwo = [...filterUstensils.map((el =>(el.ustensils).flat()))];
-  filterUstensilsTwo.flat().map((el) => el.charAt(0).toUpperCase() + el.slice(1));
-  const filterUstensilsThree = [...new Set(filterUstensilsTwo.flat().sort((a, b) => a.localeCompare(b)))]
+  const filterUstensils = [...new Set(globalArray)];
+  const filterUstensilsTwo = [...filterUstensils.map((el) => el.ustensils.flat()),];
+  const filterUstensilsThree = filterUstensilsTwo.flat().map((el) => el.charAt(0).toUpperCase() + el.slice(1));
+  const filterUstensilsFour = [...new Set(filterUstensilsThree.flat().sort((a, b) => a.localeCompare(b))),];
   listUstensils[1].innerHTML = "";
-  for(const ustensil of filterUstensilsThree){
-    listUstensils[1].innerHTML += `<li class = "list__element"> ${ustensil} </li>`;
-  }
+  for (const ustensil of filterUstensilsFour) {listUstensils[1].innerHTML += `<li class = "list__element"> ${ustensil} </li>`;}
+  console.log(globalArray);
+  updateWithBadges(globalArray);
+}
+
+const mainHeader = document.querySelector(".main__header");
+console.log(mainHeader);
+function updateWithBadges (globalArray) {
+  const listElements = document.querySelectorAll(".list__element");
+  console.log(listElements);
+  for (const listElement of listElements) {
+    listElement.addEventListener("click", () => {
+      const value = listElement.textContent.toLowerCase().trim();
+    globalArray = [
+    ...globalArray.filter(el => el.ingredients.map((el) => el.ingredient.toLowerCase()).includes( value)), 
+    ...globalArray.filter(el => el.appliance.toLowerCase().trim().includes(value)), 
+    ...globalArray.filter(el => el.ustensils.map((el) => el.toLowerCase()).includes(value)) ]
+      console.log(globalArray)
+      console.log(value);;
+      let valueChoosen = document.createElement("p");
+      valueChoosen.innerHTML = `${value}`;
+      mainHeader.insertAdjacentElement("beforeend", valueChoosen);
+      updateDomBarSearch(globalArray);
+      updateThreeLists(globalArray);
+  })}
 }

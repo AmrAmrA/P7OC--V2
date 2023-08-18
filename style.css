@@ -95,6 +95,7 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 20px 80px;
+  margin-bottom: 70px;
 }
 .recipes__components,
 .firstPart,
