@@ -150,7 +150,8 @@ searchInput.addEventListener("input", (e) => {
 function conditionnalLists(value) {
   if (value.length >= 3 && globalArray.length > 0) {
     errorBackground.style = "display: none";
-    machinChouette(globalArray);
+    updateDomBarSearch(globalArray);
+    updateThreeLists(globalArray)
   } else if (value.length == 0) {
     errorBackground.style = "display: none";
     const main = document.querySelector(".main__cards");
@@ -160,17 +161,19 @@ function conditionnalLists(value) {
     const numberRecipesInside = document.querySelector(".numberRecipesInside");
     numberRecipeOutside.textContent = `1500 recettes`;
     numberRecipesInside.textContent = `1500 recettes`;
+    updateThreeLists(globalArray)
   } else if (value.length >= 3 && globalArray.length == 0) {
     errorBackground.style = "display: block";
     errorMessage.textContent =
     `Aucune recette ne contient "${value}" vous pouvez chercher «
     tarte aux pommes », « poisson », etc`;
-    machinChouette(globalArray);
+    updateDomBarSearch(globalArray);
+    updateThreeLists(globalArray)
   }
 }
 const numberRecipesInside = document.querySelector(".numberRecipesInside");
 const numberRecipeOutside = document.querySelector(".numberRecipesOutside");
-function machinChouette(globalArray) {
+function updateDomBarSearch(globalArray) {
   const globalArrayNewSet = new Set(globalArray);
   numberRecipeOutside.textContent = `${globalArrayNewSet.size} recettes`;
   numberRecipesInside.textContent = `${globalArrayNewSet.size} recettes`;
@@ -210,5 +213,36 @@ function machinChouette(globalArray) {
                     </div>
                     </div>
                 `;
+  }
+}
+
+
+function updateThreeLists(globalArray) {
+  // Filter Ingredients and update them dynamically
+  const filterIngrdients = [...new Set(globalArray)]
+  const filterIngrdientsTwo = [...filterIngrdients.map((el =>(el.ingredients).flat()
+  .map((el) => el.ingredient)
+  .sort().flat()))];
+  const filterIngrdientsThree = [...new Set(filterIngrdientsTwo.flat().sort((a, b) => a.localeCompare(b)))]
+  listIngredients[1].innerHTML = "";
+  for(const ingredient of filterIngrdientsThree){
+    listIngredients[1].innerHTML += `<li class = "list__element"> ${ingredient} </li>`;
+  }
+  // Filter Appliances and update them dynamically
+  const filterAppliances = [...new Set(globalArray)]
+  const filterAppliancesTwo = [...filterAppliances.map((el =>(el.appliance)))];
+  const filterAppliancesThree = [...new Set(filterAppliancesTwo.flat().sort((a, b) => a.localeCompare(b)))]
+  listAppliances[1].innerHTML = "";
+  for(const appliance of filterAppliancesThree){
+    listAppliances[1].innerHTML += `<li class = "list__element"> ${appliance} </li>`;
+  }
+  // Filter Ustensils and update them dynamically
+  const filterUstensils = [...new Set(globalArray)]
+  const filterUstensilsTwo = [...filterUstensils.map((el =>(el.ustensils).flat()))];
+  filterUstensilsTwo.flat().map((el) => el.charAt(0).toUpperCase() + el.slice(1));
+  const filterUstensilsThree = [...new Set(filterUstensilsTwo.flat().sort((a, b) => a.localeCompare(b)))]
+  listUstensils[1].innerHTML = "";
+  for(const ustensil of filterUstensilsThree){
+    listUstensils[1].innerHTML += `<li class = "list__element"> ${ustensil} </li>`;
   }
 }
