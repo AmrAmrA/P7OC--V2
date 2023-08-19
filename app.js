@@ -33,12 +33,8 @@ async function fillTheDom() {
     article.classList.add("recipe__card");
     main.appendChild(article);
     article.innerHTML = `
-            <div class = "time__place">
-                <p class = 'recipe__time'> ${recipe.time} min </p>
-            </div>
-            <img src="photosRecettes/${
-              recipe.image
-            }" class="recipe__image" alt="flèche vers le bas">
+            <div class = "time__place"><p class = 'recipe__time'> ${recipe.time} min </p></div>
+            <img src="photosRecettes/${recipe.image}" class="recipe__image" alt="flèche vers le bas">
                 <div class = 'recipe__body'> 
                 <h1 class = "recipe__title"> ${recipe.name} </h1>
                 <p class = "texte__recette"> Recette </p>
@@ -46,24 +42,15 @@ async function fillTheDom() {
                 <p class = "texte__recette"> Ingrédients </p>
                 <ul class = "recipe__preparation">
                     ${recipe.ingredients
-                      .map(
-                        (ingredient) => `
-                    <li> 
-                        <span class = "ingredient__name">  ${
-                          ingredient.ingredient
-                        } </span>   
-                        <span class = "ingredient_quantity"> ${
-                          ingredient.quantity ? ingredient.quantity : ""
-                        }  ${ingredient.unit ? ingredient.unit : ""} </span> 
+                      .map((ingredient) => `
+                      <li> 
+                        <span class = "ingredient__name">  ${ingredient.ingredient} </span>   
+                        <span class = "ingredient_quantity"> ${ingredient.quantity ? ingredient.quantity : ""}  ${ingredient.unit ? ingredient.unit : ""} </span> 
                     </li>`
-                      )
-                      .join("")}
+                      ).join("")}
                 </ul>
                     </div>
-                    </div>
-                `;
-  }
-}
+                    </div>`;}}
 
 // Function to to toggle the display of the ingredients, appliances and ustensils
 const magnyfiyingComponents = document.querySelectorAll(".arrow__down");
@@ -85,8 +72,6 @@ magnyfiyingComponents.forEach((el) => {
 const listAppliances = document.querySelectorAll(".list__appliances");
 const listIngredients = document.querySelectorAll(".list__ingredients");
 const listUstensils = document.querySelectorAll(".list__ustensils");
-const pluralArray = [];
-
 // Function to fill the lists of ingredients, appliances and ustensils
 // We had to sort them, flat them, and put them in a set to avoid duplicates
 async function spreadElements() {
@@ -99,9 +84,7 @@ async function spreadElements() {
   }
   // array of ustensils
   const ArraySorted2 = dataArray
-    .map((el) => el.ustensils)
-    .flat()
-    .sort();
+    .map((el) => el.ustensils).flat().sort();
   const ArraySorted3 = ArraySorted2.map((el) =>
     el.includes("(6)") ? el.replace("(6)", "") : el
   );
@@ -114,10 +97,7 @@ async function spreadElements() {
   }
   // array of ingredients
   const ArraySorted4 = dataArray
-    .map((el) => el.ingredients)
-    .flat()
-    .map((el) => el.ingredient)
-    .sort();
+    .map((el) => el.ingredients).flat().map((el) => el.ingredient).sort();
   ArraySorted4.sort((a, b) => a.localeCompare(b));
   const ArraySorted5 = ArraySorted4.map((el) => el.toLowerCase());
 
@@ -156,7 +136,8 @@ function conditionnalLists(value) {
   } else if (value.length == 0) {
     errorBackground.style = "display: none";
     main.innerHTML = "";
-    fillTheDom();
+    console.log(globalArray);
+    updateWithBadges(globalArray)
     numberOfRecipesGlobal();
     updateThreeLists(globalArray);
   } else if (value.length >= 3 && globalArray.length == 0) {
@@ -244,15 +225,17 @@ function updateThreeLists(globalArray) {
   const filterUstensilsFour = [...new Set(filterUstensilsThree.flat().sort((a, b) => a.localeCompare(b))),];
   listUstensils[1].innerHTML = "";
   for (const ustensil of filterUstensilsFour) {listUstensils[1].innerHTML += `<li class = "list__element"> ${ustensil} </li>`;}
-  console.log(globalArray);
+
   updateWithBadges(globalArray);
 }
 
 const mainHeader = document.querySelector(".main__header");
-console.log(mainHeader);
+const badges     = document.querySelector(".badges");
+
+
+
 function updateWithBadges (globalArray) {
   const listElements = document.querySelectorAll(".list__element");
-  console.log(listElements);
   for (const listElement of listElements) {
     listElement.addEventListener("click", () => {
       const value = listElement.textContent.toLowerCase().trim();
@@ -260,12 +243,21 @@ function updateWithBadges (globalArray) {
     ...globalArray.filter(el => el.ingredients.map((el) => el.ingredient.toLowerCase()).includes( value)), 
     ...globalArray.filter(el => el.appliance.toLowerCase().trim().includes(value)), 
     ...globalArray.filter(el => el.ustensils.map((el) => el.toLowerCase()).includes(value)) ]
-      console.log(globalArray)
-      console.log(value);;
-      let valueChoosen = document.createElement("p");
-      valueChoosen.innerHTML = `${value}`;
-      mainHeader.insertAdjacentElement("beforeend", valueChoosen);
+      const wrapperElements = document.createElement("div");
+      wrapperElements.classList.add("wrapper__elements");
+      const imageSelected = document.createElement("img");
+      imageSelected.src = "assets/cancelBadge.png";
+      const paragraphSelected = document.createElement("p");
+      paragraphSelected.textContent = value;
+      paragraphSelected.classList.add("paragraph__selected");
+      const badgeSelected = document.createElement("div");
+      badgeSelected.classList.add("badge__selected");
+      wrapperElements.appendChild(paragraphSelected);
+      wrapperElements.appendChild(imageSelected);
+      badgeSelected.appendChild(wrapperElements);
+      badges.appendChild(badgeSelected);
       updateDomBarSearch(globalArray);
       updateThreeLists(globalArray);
+      console.log(globalArray);
   })}
 }

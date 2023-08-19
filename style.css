@@ -95,8 +95,34 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 20px 80px;
-  margin-bottom: 70px;
 }
+
+.badges {
+  display: flex;
+  align-items: center;
+  padding: 20px 80px;
+  gap: 20px;
+}
+.badge__selected {
+  background-color: #FFD15B;
+  width: 200px;
+  height: 50px;
+  border-radius: 15px;
+  padding: 0 15px;
+}
+.paragraph__selected {
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+}
+.wrapper__elements {
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  align-items: center;
+}
+
+
+
 .recipes__components,
 .firstPart,
 .secondPart {
