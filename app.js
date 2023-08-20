@@ -1,5 +1,5 @@
 const dataArrayOriginal = [];
-const dataArray = [];
+let   dataArray = [];
 const init = async () => {
   await displayInformations();
   await fillTheDom();
@@ -136,10 +136,11 @@ function conditionnalLists(value) {
   } else if (value.length == 0) {
     errorBackground.style = "display: none";
     main.innerHTML = "";
-    console.log(globalArray);
+    fillTheDom();
     updateWithBadges(globalArray)
     numberOfRecipesGlobal();
     updateThreeLists(globalArray);
+    console.log(dataArray);
   } else if (value.length >= 3 && globalArray.length == 0) {
     errorBackground.style = "display: block";
     errorMessage.textContent = `Aucune recette ne contient "${value}" vous pouvez chercher «
@@ -226,7 +227,7 @@ function updateThreeLists(globalArray) {
   listUstensils[1].innerHTML = "";
   for (const ustensil of filterUstensilsFour) {listUstensils[1].innerHTML += `<li class = "list__element"> ${ustensil} </li>`;}
 
-  updateWithBadges(globalArray);
+  updateWithBadges(dataArray);
 }
 
 const mainHeader = document.querySelector(".main__header");
@@ -234,30 +235,28 @@ const badges     = document.querySelector(".badges");
 
 
 
-function updateWithBadges (globalArray) {
+function updateWithBadges (dataArray) {
   const listElements = document.querySelectorAll(".list__element");
   for (const listElement of listElements) {
     listElement.addEventListener("click", () => {
+      listElement.style.pointerEvents = "none";
       const value = listElement.textContent.toLowerCase().trim();
-    globalArray = [
-    ...globalArray.filter(el => el.ingredients.map((el) => el.ingredient.toLowerCase()).includes( value)), 
-    ...globalArray.filter(el => el.appliance.toLowerCase().trim().includes(value)), 
-    ...globalArray.filter(el => el.ustensils.map((el) => el.toLowerCase()).includes(value)) ]
-      const wrapperElements = document.createElement("div");
-      wrapperElements.classList.add("wrapper__elements");
-      const imageSelected = document.createElement("img");
-      imageSelected.src = "assets/cancelBadge.png";
-      const paragraphSelected = document.createElement("p");
-      paragraphSelected.textContent = value;
-      paragraphSelected.classList.add("paragraph__selected");
-      const badgeSelected = document.createElement("div");
-      badgeSelected.classList.add("badge__selected");
-      wrapperElements.appendChild(paragraphSelected);
-      wrapperElements.appendChild(imageSelected);
-      badgeSelected.appendChild(wrapperElements);
-      badges.appendChild(badgeSelected);
+    dataArray = [
+    ...dataArray.filter(el => el.ingredients.map((el) => el.ingredient.toLowerCase()).includes( value)), 
+    ...dataArray.filter(el => el.appliance.toLowerCase().trim().includes(value)), 
+    ...dataArray.filter(el => el.ustensils.map((el) => el.toLowerCase()).includes(value)) ]
+      console.log(dataArray);
+      generateBadges(value);
       updateDomBarSearch(globalArray);
       updateThreeLists(globalArray);
-      console.log(globalArray);
   })}
+}
+
+
+
+
+
+function generateBadges (value) {
+  const badgeSelected = `<div class = "badge__selected"> <div class = "wrapper__elements"> <p class = "paragraph__selected"> ${value} </p> <img src = "assets/cancelBadge.png" alt = "cancel badge" class = "image__selected"> </div> </div>`;
+  badges.innerHTML += badgeSelected;
 }
