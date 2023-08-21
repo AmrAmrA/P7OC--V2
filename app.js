@@ -235,17 +235,17 @@ const badges     = document.querySelector(".badges");
 
 
 
-function updateWithBadges (dataArray) {
+function updateWithBadges (globalArray) {
   const listElements = document.querySelectorAll(".list__element");
   for (const listElement of listElements) {
     listElement.addEventListener("click", () => {
       listElement.style.pointerEvents = "none";
       const value = listElement.textContent.toLowerCase().trim();
-    dataArray = [
-    ...dataArray.filter(el => el.ingredients.map((el) => el.ingredient.toLowerCase()).includes( value)), 
-    ...dataArray.filter(el => el.appliance.toLowerCase().trim().includes(value)), 
-    ...dataArray.filter(el => el.ustensils.map((el) => el.toLowerCase()).includes(value)) ]
-      console.log(dataArray);
+    globalArray = [
+    ...globalArray.filter(el => el.ingredients.map((el) => el.ingredient.toLowerCase()).includes( value)), 
+    ...globalArray.filter(el => el.appliance.toLowerCase().trim().includes(value)), 
+    ...globalArray.filter(el => el.ustensils.map((el) => el.toLowerCase()).includes(value)) ]
+      console.log(globalArray);
       generateBadges(value);
       updateDomBarSearch(globalArray);
       updateThreeLists(globalArray);
